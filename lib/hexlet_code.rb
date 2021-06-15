@@ -10,29 +10,20 @@ module HexletCode
     class Error < StandardError; end
   
     class << self
-      # TODO: ann block
-      def build type, params = {}
-        send(type, params)
-      end
-
-      def br params 
-        p 'br' 
-      end
-  
-      def img params
-        p 'img'
+      def build type, params = {}, &block
+        if block_given?
+          "<#{type} #{prams_to_attr params}>#{ yield }</#{type}>"
+        else
+          "<#{type} #{prams_to_attr params}/>"
+        end
       end
   
-      def input params
-        p 'input'  
-      end
+      private
   
-      def label params
-        p 'label'
+      def prams_to_attr params
+        params.reduce("") { |accum, (key, value)| accum += " #{key}='#{value}'" }
       end
     end
   end
+  
 end
-
-
-HexletCode::Tag.build("br")
