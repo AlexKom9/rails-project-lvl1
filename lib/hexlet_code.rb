@@ -27,9 +27,9 @@ module HexletCode
     end
   end
 
-  class << self 
-    def form_for entity = {}, &block
-      Tag.build('form', { action: '#', method: 'post' }, &block)
+  class << self
+    def form_for(_entity = {}, &block)
+      Tag.build("form", { action: "#", method: "post" }, &block)
     end
   end
 end
