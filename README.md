@@ -1,6 +1,4 @@
 [![Ruby](https://github.com/AlexKom9/rails-project-lvl1/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/AlexKom9/rails-project-lvl1/actions/workflows/main.yml)
-
-### Hexlet tests and linter status:
 [![Actions Status](https://github.com/AlexKom9/rails-project-lvl1/workflows/hexlet-check/badge.svg)](https://github.com/AlexKom9/rails-project-lvl1/actions)
 
 # HexletCode
