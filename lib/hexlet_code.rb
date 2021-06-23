@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "hexlet_code/version"
+require_relative 'hexlet_code/version'
 
 module HexletCode
   class Error < StandardError; end
@@ -20,45 +20,45 @@ module HexletCode
       private
 
       def prams_to_attr(params)
-        params.reduce("") { |accum, (key, value)| accum + " #{key}='#{value}'" }
+        params.reduce('') { |accum, (key, value)| accum + " #{key}='#{value}'" }
       end
     end
   end
 
   @entity = {}
-  @temp_tegs_result = ""
+  @temp_tegs_result = ''
 
   class << self
-    def form_for(entity, url = "#", method = "post")
+    def form_for(entity, url = '#', method = 'post')
       @entity = entity
       reset
 
-      Tag.build "form", { action: url, method: method } do
+      Tag.build 'form', { action: url, method: method } do
         result = yield self if block_given?
         reset
         result
       end
     end
 
-    def input(field_name, as: :input, type: "text", **args)
-      tag_name = as == :text ? "textarea" : "input"
+    def input(field_name, as: :input, type: 'text', **args)
+      tag_name = as == :text ? 'textarea' : 'input'
 
-      id = args.fetch("id", field_name)
+      id = args.fetch('id', field_name)
 
       build_label field_name, id
       build_input field_name, tag_name, **args, id: id, type: type
     end
 
-    def submit(text = "Save", **args)
+    def submit(text = 'Save', **args)
       add_tag do
-        Tag.build "input", { type: "submit", **args, value: text, name: "commit" }
+        Tag.build 'input', { type: 'submit', **args, value: text, name: 'commit' }
       end
     end
 
     private
 
     def build_input(field_name, tag_name, **args)
-      if tag_name == "textarea"
+      if tag_name == 'textarea'
         add_tag do
           Tag.build(tag_name, { name: field_name, **args }) { @entity[field_name] }
         end
@@ -69,7 +69,7 @@ module HexletCode
 
     def build_label(title, html_for, **args)
       add_tag do
-        Tag.build("label", { for: html_for, **args }) { title }
+        Tag.build('label', { for: html_for, **args }) { title }
       end
     end
 
