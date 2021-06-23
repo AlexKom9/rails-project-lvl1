@@ -40,6 +40,7 @@ module HexletCode
       end
     end
 
+    # rubocop:disable Naming/MethodParameterName
     def input(field_name, as: :input, type: 'text', **args)
       tag_name = as == :text ? 'textarea' : 'input'
 
@@ -48,6 +49,7 @@ module HexletCode
       build_label field_name, id
       build_input field_name, tag_name, **args, id: id, type: type
     end
+    # rubocop:enable Naming/MethodParameterName
 
     def submit(text = 'Save', **args)
       add_tag do
