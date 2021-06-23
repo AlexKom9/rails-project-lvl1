@@ -28,48 +28,48 @@ module HexletCode
   @@entity = {}
   @@temp_tegs_result = ""
 
-  class << self 
+  class << self
     def form_for(entity)
       @@entity = entity
-      reset()
-  
+      reset
+
       Tag.build "form", { action: "#", method: "post" } do
         result = yield self if block_given?
-        reset()
+        reset
         result
       end
     end
 
-    def input(fieldName, as: :input, **args)
+    def input(field_name, as: :input, **args)
       tag_name = as == :text ? "textarea" : "input"
 
-      id = args.fetch('id', fieldName)
+      id = args.fetch("id", field_name)
 
-      build_label fieldName, id
-      build_input fieldName, tag_name, **args,  id: id
+      build_label field_name, id
+      build_input field_name, tag_name, **args, id: id
     end
 
-    def submit text = "Save", **args
+    def submit(text = "Save", **args)
       add_tag do
-        Tag.build 'input', { type: "submit", **args, value: text, name: "commit" }
+        Tag.build "input", { type: "submit", **args, value: text, name: "commit" }
       end
     end
 
     private
 
-    def build_input fieldName, tag_name, **args 
+    def build_input(field_name, tag_name, **args)
       if tag_name === "textarea"
         add_tag do
-          Tag.build tag_name, { name: fieldName, **args } do @@entity[fieldName] end
+          Tag.build(tag_name, { name: field_name, **args }) { @@entity[field_name] }
         end
       else
-        add_tag do Tag.build tag_name, { name: fieldName, value: @@entity[fieldName], **args } end
+        add_tag { Tag.build(tag_name, { name: field_name, value: @@entity[field_name], **args }) }
       end
     end
 
-    def build_label title, html_for, **args
-      add_tag do 
-        Tag.build 'label', { for: html_for, **args} do title end 
+    def build_label(title, html_for, **args)
+      add_tag do
+        Tag.build("label", { for: html_for, **args }) { title }
       end
 
       add_new_line
