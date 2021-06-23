@@ -40,13 +40,13 @@ module HexletCode
       end
     end
 
-    def input(field_name, as_tag: :input, **args)
-      tag_name = as_tag == :text ? "textarea" : "input"
+    def input(field_name, as: :input, type: 'text', **args)
+      tag_name = as == :text ? "textarea" : "input"
 
       id = args.fetch("id", field_name)
 
       build_label field_name, id
-      build_input field_name, tag_name, **args, id: id
+      build_input field_name, tag_name, **args, id: id, type: type
     end
 
     def submit(text = "Save", **args)
@@ -88,3 +88,15 @@ module HexletCode
     end
   end
 end
+
+# User = Struct.new(:name, :job, keyword_init: true)
+# user = User.new job: 'hexlet'
+
+# result = HexletCode.form_for user do |f|
+#   f.input :name, class: 'user-input'
+#   f.input :job, as: :text
+#   f.submit
+# end
+
+# pp result
+
