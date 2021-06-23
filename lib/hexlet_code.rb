@@ -40,7 +40,7 @@ module HexletCode
       end
     end
 
-    def input(field_name, as: :input, type: 'text', **args)
+    def input(field_name, as: :input, type: "text", **args)
       tag_name = as == :text ? "textarea" : "input"
 
       id = args.fetch("id", field_name)
@@ -99,4 +99,3 @@ end
 # end
 
 # pp result
-
