@@ -25,12 +25,12 @@ module HexletCode
     end
   end
 
-  @@entity = {}
-  @@temp_tegs_result = ""
+  @entity = {}
+  @temp_tegs_result = ""
 
   class << self
     def form_for(entity)
-      @@entity = entity
+      @entity = entity
       reset
 
       Tag.build "form", { action: "#", method: "post" } do
@@ -40,8 +40,8 @@ module HexletCode
       end
     end
 
-    def input(field_name, as: :input, **args)
-      tag_name = as == :text ? "textarea" : "input"
+    def input(field_name, as_tag: :input, **args)
+      tag_name = as_tag == :text ? "textarea" : "input"
 
       id = args.fetch("id", field_name)
 
@@ -58,12 +58,12 @@ module HexletCode
     private
 
     def build_input(field_name, tag_name, **args)
-      if tag_name === "textarea"
+      if tag_name == "textarea"
         add_tag do
-          Tag.build(tag_name, { name: field_name, **args }) { @@entity[field_name] }
+          Tag.build(tag_name, { name: field_name, **args }) { @entity[field_name] }
         end
       else
-        add_tag { Tag.build(tag_name, { name: field_name, value: @@entity[field_name], **args }) }
+        add_tag { Tag.build(tag_name, { name: field_name, value: @entity[field_name], **args }) }
       end
     end
 
@@ -71,20 +71,18 @@ module HexletCode
       add_tag do
         Tag.build("label", { for: html_for, **args }) { title }
       end
-
-      add_new_line
     end
 
     def reset
-      @@temp_tegs_result = "\n"
+      @temp_tegs_result = "\n"
     end
 
     def add_new_line
-      @@temp_tegs_result += "\n"
+      @temp_tegs_result += "\n"
     end
 
     def add_tag
-      @@temp_tegs_result += yield
+      @temp_tegs_result += yield
 
       add_new_line
     end
