@@ -1,17 +1,10 @@
 # frozen_string_literal: true
 
 require_relative "hexlet_code/version"
-require "byebug"
 
 module HexletCode
   class Error < StandardError; end
 
-  @@entity = {}
-  @@temp_tegs_result = ""
-
-  # Your code goes here...
-
-  # HTML tags builder module
   module Tag
     class Error < StandardError; end
 
@@ -30,11 +23,10 @@ module HexletCode
         params.reduce("") { |accum, (key, value)| accum + " #{key}='#{value}'" }
       end
     end
-
-    # module PublicTags
-
-    # end
   end
+
+  @@entity = {}
+  @@temp_tegs_result = ""
 
   class << self 
     def form_for(entity)
@@ -97,13 +89,4 @@ module HexletCode
       add_new_line
     end
   end
-end
-
-User = Struct.new(:name, :job, keyword_init: true)
-user = User.new name: "rob", job: "hexlet"
-
-result = HexletCode.form_for user do |f|
-  f.input :name
-  f.input :job, as: :text
-  f.submit
 end
