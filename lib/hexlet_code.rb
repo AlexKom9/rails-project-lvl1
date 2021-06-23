@@ -51,32 +51,59 @@ module HexletCode
     def input(fieldName, as: :input, **args)
       tag_name = as == :text ? "textarea" : "input"
 
-      if tag_name === "textarea"
-        @@temp_tegs_result += Tag.build tag_name, { name: fieldName, **args } do
-          @@entity[fieldName]
-        end
+      id = args.fetch('id', fieldName)
 
-      else
-        @@temp_tegs_result += Tag.build tag_name, { name: fieldName, value: @@entity[fieldName], **args }
+      build_label fieldName, id
+      build_input fieldName, tag_name, **args,  id: id
+    end
+
+    def submit text = "Save", **args
+      add_tag do
+        Tag.build 'input', { type: "submit", **args, value: text, name: "commit" }
       end
-
-      @@temp_tegs_result += "\n"
     end
 
     private
 
+    def build_input fieldName, tag_name, **args 
+      if tag_name === "textarea"
+        add_tag do
+          Tag.build tag_name, { name: fieldName, **args } do @@entity[fieldName] end
+        end
+      else
+        add_tag do Tag.build tag_name, { name: fieldName, value: @@entity[fieldName], **args } end
+      end
+    end
+
+    def build_label title, html_for, **args
+      add_tag do 
+        Tag.build 'label', { for: html_for, **args} do title end 
+      end
+
+      add_new_line
+    end
+
     def reset
       @@temp_tegs_result = "\n"
+    end
+
+    def add_new_line
+      @@temp_tegs_result += "\n"
+    end
+
+    def add_tag
+      @@temp_tegs_result += yield
+
+      add_new_line
     end
   end
 end
 
-# User = Struct.new(:name, :job, keyword_init: true)
-# user = User.new name: "rob", job: "hexlet"
+User = Struct.new(:name, :job, keyword_init: true)
+user = User.new name: "rob", job: "hexlet"
 
-# result = HexletCode.form_for user do |f|
-#   f.input :name
-#   f.input :job, as: :text
-# end
-
-# pp result
+result = HexletCode.form_for user do |f|
+  f.input :name
+  f.input :job, as: :text
+  f.submit
+end
