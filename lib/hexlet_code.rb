@@ -29,11 +29,11 @@ module HexletCode
   @temp_tegs_result = ""
 
   class << self
-    def form_for(entity)
+    def form_for(entity, url = "#", method = "post")
       @entity = entity
       reset
 
-      Tag.build "form", { action: "#", method: "post" } do
+      Tag.build "form", { action: url, method: method } do
         result = yield self if block_given?
         reset
         result
