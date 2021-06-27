@@ -3,11 +3,13 @@
 require_relative 'test_helper'
 
 class HexletCodeTest < Minitest::Test
-  def test_that_it_has_a_version_number
+  extend MiniTest::Spec::DSL
+
+  it 'should has a version_number' do
     refute_nil ::HexletCode::VERSION
   end
 
-  def test_should_render_form_input
+  it 'should render form input' do
     user_struct = Struct.new(:name, :job, keyword_init: true)
     user = user_struct.new
 
@@ -23,7 +25,7 @@ class HexletCodeTest < Minitest::Test
     assert_includes form, '</form>'
   end
 
-  def test_should_render_form_input_with_value
+  it 'should render form input with value' do
     user_struct = Struct.new(:name, :job, keyword_init: true)
     user = user_struct.new name: 'john doe'
 
@@ -39,7 +41,7 @@ class HexletCodeTest < Minitest::Test
     assert_includes form, '</form>'
   end
 
-  def test_should_render_form_input_textarea_with_value
+  it 'should render form input textarea with value' do
     user_struct = Struct.new(:name, :job, keyword_init: true)
     user = user_struct.new name: 'john doe', job: 'hexlet'
 
@@ -58,7 +60,7 @@ class HexletCodeTest < Minitest::Test
     assert_includes form, '</form>'
   end
 
-  def test_should_render_form_input_with_class_name
+  it 'should render form input with class name' do
     user_struct = Struct.new(:name, :job, keyword_init: true)
     user = user_struct.new name: 'john doe'
 

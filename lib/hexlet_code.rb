@@ -90,12 +90,3 @@ module HexletCode
     end
   end
 end
-
-User = Struct.new(:name, :job, keyword_init: true)
-user = User.new job: 'hexlet'
-
-result = HexletCode.form_for user do |f|
-  f.input :name, class: 'user-input'
-  f.input :job, as: :text
-  f.submit
-end
