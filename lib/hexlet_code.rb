@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require 'byebug'
+# require 'byebug'
 require_relative 'hexlet_code/version'
 require_relative 'tag'
-# require_relative 'input_tags'
 
 module HexletCode
   class FormBuilder
@@ -12,35 +11,40 @@ module HexletCode
       @temp_tegs_result = ''
     end
 
-    def input(name, as: :input, **args)
-      id = args.fetch('id', name)
+    def input(name, **options)
+      id = options.fetch(:id, name)
+      as = options.fetch(:as, :input)
+
+      prepared_options = options.clone
+      prepared_options.delete(:id)
+      prepared_options.delete(:as)
 
       case as
       when :input
-        build_input name: name, id: id, **args
+        build_input name: name, id: id, **prepared_options
       when :text
-        build_textarea name: name, id: id, **args
+        build_textarea name: name, id: id, **prepared_options
       when :checkbox
-        build_checkbox name: name, id: id, **args
+        build_checkbox name: name, id: id, **prepared_options
       when :select
-        build_select name: name, id: id, **args
+        build_select name: name, id: id, **prepared_options
       else
         # TODO: update
         raise 'Invalid as: param'
       end
     end
 
-    def submit(text = 'Save', **args)
+    def submit(text = 'Save', **options)
       add_tag do
-        Tag.build 'input', { type: 'submit', **args, value: text, name: 'commit' }
+        Tag.build 'input', { type: 'submit', **options, value: text, name: 'commit' }
       end
     end
 
     private
 
-    def build_label(title, html_for, **args)
+    def build_label(title, html_for, **options)
       add_tag do
-        Tag.build('label', { for: html_for, **args }) { title }
+        Tag.build('label', { for: html_for, **options }) { title }
       end
     end
 
@@ -54,32 +58,32 @@ module HexletCode
       add_new_line
     end
 
-    def build_input(name:, id:, **args)
+    def build_input(name:, id:, **options)
       add_tag do
         Tag.build('label', { for: id }) { name }
       end
 
       add_tag do
-        Tag.build('input', { name: :name, value: @entity[name], id: id, type: :text, **args })
+        Tag.build('input', { name: :name, value: @entity[name], id: id, type: :text, **options })
       end
     end
 
-    def build_textarea(name:, id:, **args)
+    def build_textarea(name:, id:, **options)
       add_tag do
-        Tag.build('label', { for: :id }) { name }
+        Tag.build('label', { for: id }) { name }
       end
 
       add_tag do
-        Tag.build('textarea', { name: name, id: id, **args }) { @entity[name] }
+        Tag.build('textarea', { name: name, id: id, **options }) { @entity[name] }
       end
     end
 
-    def build_select(name:, id:, **args)
+    def build_select(name:, id:, **options)
       add_tag do
         Tag.build('select', { name: name, value: @entity[name], id: id }) do
           add_new_line
           result = "\n"
-          args[:options].each do |option_value|
+          options[:options].each do |option_value|
             result += Tag.build('option', { value: option_value }) do
               option_value
             end
@@ -91,15 +95,16 @@ module HexletCode
       end
     end
 
-    def build_checkbox(name:, id:, **args)
+    def build_checkbox(name:, id:, **options)
       add_tag do
-        Tag.build('input', { name: name, checked: @entity[name], value: name, id: id, **args, type: :checkbox })
+        Tag.build('input', { name: name, checked: @entity[name], value: name, id: id, **options, type: :checkbox })
       end
       add_tag do
         Tag.build('label', { for: id }) { name }
       end
     end
 
+    # TODO: implement radio
     def radio; end
   end
 
@@ -112,14 +117,14 @@ module HexletCode
   end
 end
 
-user_struct = Struct.new(:name, :job, :citizen, :gender, keyword_init: true)
-user = user_struct.new(name: 'john doe', job: 'hexlet', gender: 'f', citizen: true, )
+# user_struct = Struct.new(:name, :job, :citizen, :gender, :food, keyword_init: true)
+# user = user_struct.new(name: 'john doe', job: 'hexlet', gender: 'f', citizen: true)
 
-form = HexletCode.form_for user do |f|
-  f.input :name
-  f.input :citizen, as: :checkbox
-  f.input :gender, as: :select, options: %w[f m]
-  f.submit
-end
+# form = HexletCode.form_for user do |f|
+#   f.input :name
+#   f.input :citizen, as: :checkbox
+#   f.input :gender, as: :select, options: %w[f m]
+#   f.submit
+# end
 
-pp form
+# pp form
