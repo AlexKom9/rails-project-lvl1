@@ -1,43 +1,13 @@
 # frozen_string_literal: true
 
 require_relative 'hexlet_code/version'
+require_relative 'tag'
 
 module HexletCode
-  class Error < StandardError; end
-
-  module Tag
-    class Error < StandardError; end
-
-    class << self
-      def build(type, params = {})
-        if block_given?
-          "<#{type}#{prams_to_attr params}>#{yield}</#{type}>"
-        else
-          "<#{type}#{prams_to_attr params}/>"
-        end
-      end
-
-      private
-
-      def prams_to_attr(params)
-        params.reduce('') { |accum, (key, value)| accum + " #{key}='#{value}'" }
-      end
-    end
-  end
-
-  @entity = {}
-  @temp_tegs_result = ''
-
-  class << self
-    def form_for(entity, url = '#', method = 'post')
+  class FormBuilder
+    def initialize(entity)
       @entity = entity
-      reset
-
-      Tag.build 'form', { action: url, method: method } do
-        result = yield self if block_given?
-        reset
-        result
-      end
+      @temp_tegs_result = ''
     end
 
     # rubocop:disable Naming/MethodParameterName
@@ -75,10 +45,6 @@ module HexletCode
       end
     end
 
-    def reset
-      @temp_tegs_result = "\n"
-    end
-
     def add_new_line
       @temp_tegs_result += "\n"
     end
@@ -87,6 +53,14 @@ module HexletCode
       @temp_tegs_result += yield
 
       add_new_line
+    end
+  end
+
+  class << self
+    def form_for(entity, url = '#', method = 'post')
+      Tag.build 'form', { action: url, method: method } do
+        yield FormBuilder.new entity if block_given?
+      end
     end
   end
 end
