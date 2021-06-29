@@ -131,4 +131,43 @@ class HexletCodeTest < Minitest::Test
 
     assert_includes form, "<input name='name' value='john doe' id='name' type='text' class='user-input'/>"
   end
+
+  it 'should render form select with options' do
+    user_struct = Struct.new(:name, :job, :gender, keyword_init: true)
+    user = user_struct.new name: 'john doe', gender: 'f'
+
+    form = HexletCode.form_for user do |f|
+      f.input :gender, as: 'select', options: %w[f m]
+    end
+
+    assert_includes form, "<label for='gender'>gender</label>"
+    assert_includes form, "<select name='gender' value='f' id='gender'>"
+    assert_includes form, "<option value='f'>f</option>"
+    assert_includes form, "<option value='m'>m</option>"
+    assert_includes form, '</select>'
+  end
+
+  it 'should render checked checkbox with label' do
+    user_struct = Struct.new(:like_fish, keyword_init: true)
+    user = user_struct.new like_fish: true
+
+    form = HexletCode.form_for user do |f|
+      f.input :like_fish, as: 'checkbox'
+    end
+
+    assert_includes form, "<label for='like_fish'>like_fish</label>"
+    assert_includes form, "<input name='like_fish' checked='true' value='like_fish' id='like_fish' type='checkbox'/>"
+  end
+
+  it 'should render unchecked checkbox with label' do
+    user_struct = Struct.new(:like_fish, keyword_init: true)
+    user = user_struct.new like_fish: false
+
+    form = HexletCode.form_for user do |f|
+      f.input :like_fish, as: 'checkbox'
+    end
+
+    assert_includes form, "<label for='like_fish'>like_fish</label>"
+    assert_includes form, "<input name='like_fish' checked='false' value='like_fish' id='like_fish' type='checkbox'/>"
+  end
 end

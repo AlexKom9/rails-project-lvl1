@@ -15,7 +15,7 @@ module HexletCode
       prepared_options.delete(:id)
       prepared_options.delete(:as)
 
-      case as
+      case as.to_sym
       when :input
         build_input name: name, id: id, **prepared_options
       when :text
@@ -74,6 +74,10 @@ module HexletCode
     end
 
     def build_select(name:, id:, **options)
+      add_tag do
+        Tag.build('label', { for: id }) { name }
+      end
+
       add_tag do
         Tag.build('select', { name: name, value: @entity[name], id: id }) do
           add_new_line
