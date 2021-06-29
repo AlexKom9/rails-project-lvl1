@@ -64,7 +64,7 @@ module HexletCode
       end
 
       add_tag do
-        Tag.build('input', { name: :name, value: @entity[name], id: id, type: :text, **options })
+        Tag.build('input', { name: name, value: @entity[name], id: id, type: :text, **options })
       end
     end
 
@@ -118,10 +118,11 @@ module HexletCode
 end
 
 # user_struct = Struct.new(:name, :job, :citizen, :gender, :food, keyword_init: true)
-# user = user_struct.new(name: 'john doe', job: 'hexlet', gender: 'f', citizen: true)
+# user = user_struct.new(name: 'john doe', gender: 'f', citizen: true)
 
 # form = HexletCode.form_for user do |f|
 #   f.input :name
+#   f.input :job
 #   f.input :citizen, as: :checkbox
 #   f.input :gender, as: :select, options: %w[f m]
 #   f.submit
