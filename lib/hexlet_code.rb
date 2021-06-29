@@ -29,8 +29,7 @@ module HexletCode
       when :select
         build_select name: name, id: id, **prepared_options
       else
-        # TODO: update
-        raise 'Invalid as: param'
+        raise 'Invalid options.as'
       end
     end
 
@@ -103,9 +102,6 @@ module HexletCode
         Tag.build('label', { for: id }) { name }
       end
     end
-
-    # TODO: implement radio
-    def radio; end
   end
 
   class << self
@@ -117,15 +113,3 @@ module HexletCode
   end
 end
 
-# user_struct = Struct.new(:name, :job, :citizen, :gender, :food, keyword_init: true)
-# user = user_struct.new(name: 'john doe', gender: 'f', citizen: true)
-
-# form = HexletCode.form_for user do |f|
-#   f.input :name
-#   f.input :job
-#   f.input :citizen, as: :checkbox
-#   f.input :gender, as: :select, options: %w[f m]
-#   f.submit
-# end
-
-# pp form

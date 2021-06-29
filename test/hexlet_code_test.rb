@@ -13,9 +13,7 @@ class HexletCodeTest < Minitest::Test
     user_struct = Struct.new(:name, :job, keyword_init: true)
     user = user_struct.new
 
-    form = HexletCode.form_for user do |f|
-      f.submit
-    end
+    form = HexletCode.form_for user, &:submit
 
     assert_includes form, "<form action='#' method='post'>"
     assert_includes form, '</form>'
@@ -35,10 +33,7 @@ class HexletCodeTest < Minitest::Test
     user_struct = Struct.new(:name, :job, keyword_init: true)
     user = user_struct.new
 
-    form = HexletCode.form_for user do |f|
-      f.input :name
-      f.submit
-    end
+    form = HexletCode.form_for user, &:submit
 
     assert_includes form, "<input type='submit' value='Save' name='commit'/>"
   end
@@ -90,6 +85,18 @@ class HexletCodeTest < Minitest::Test
     assert_includes form, "<input name='test' value='john doe' id='test' type='text'/>"
   end
 
+  it 'should render custom id for input and label' do
+    user_struct = Struct.new(:test, :job, keyword_init: true)
+    user = user_struct.new test: 'john doe'
+
+    form = HexletCode.form_for user do |f|
+      f.input :test, id: :test_name_id
+    end
+
+    assert_includes form, "<label for='test_name_id'>test</label>"
+    assert_includes form, "<input name='test' value='john doe' id='test_name_id' type='text'/>"
+  end
+
   it 'should render form input textarea with value and label' do
     user_struct = Struct.new(:name, :job, keyword_init: true)
     user = user_struct.new name: 'john doe', job: 'hexlet'
@@ -124,6 +131,4 @@ class HexletCodeTest < Minitest::Test
 
     assert_includes form, "<input name='name' value='john doe' id='name' type='text' class='user-input'/>"
   end
-
-  # TODO: add specs for select and radio
 end
