@@ -2,7 +2,7 @@
 
 require_relative 'test_helper'
 
-class HexletCodeTest < Minitest::Test
+class HexletCodeTest < Minitest::Test # rubocop:disable Metrics/ClassLength
   extend MiniTest::Spec::DSL
 
   it 'should has a version_number' do

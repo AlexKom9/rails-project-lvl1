@@ -17,6 +17,3 @@ Style/Documentation:
 
 Metrics/MethodLength:
   Enabled: false
-
-Metrics/ClassLength:
-  Enabled: false
