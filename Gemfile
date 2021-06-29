@@ -12,4 +12,3 @@ gem 'minitest', '~> 5.0'
 gem 'rubocop', '~> 1.7'
 
 # TODO: move to dev dependencies
-gem 'byebug'

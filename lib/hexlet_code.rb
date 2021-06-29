@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'byebug'
 require_relative 'hexlet_code/version'
 require_relative 'tag'
 require_relative 'form_builder'
