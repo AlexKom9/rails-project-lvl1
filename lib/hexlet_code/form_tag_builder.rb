@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module HexletCode
+  private_constant :FormTagBuilder
+
   module FormTagBuilder
     autoload :Base, 'hexlet_code/form_tag_builder/base'
     autoload :Input, 'hexlet_code/form_tag_builder/input'

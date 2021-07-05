@@ -3,8 +3,7 @@
 module HexletCode
   autoload :FormTagBuilder, 'hexlet_code/form_tag_builder'
 
-  private_constant :FormTagBuilder
-
+  private_constant :FormBuilderInterface
   class FormBuilderInterface
     def initialize(entity)
       @entity = entity

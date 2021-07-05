@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module HexletCode
+  private_constant :Tag
   class Tag
     class << self
       def build(type, params = {})
