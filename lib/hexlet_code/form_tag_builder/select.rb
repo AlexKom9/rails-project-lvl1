@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module HexletCode
-  # autoload :FormTagBuilderBase, './form_tag_builder_base'
   module FormTagBuilder
     class Select < Base
       def build(name:, value:, id:, **options)

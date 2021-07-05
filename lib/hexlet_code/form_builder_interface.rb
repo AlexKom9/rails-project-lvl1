@@ -5,13 +5,13 @@ module HexletCode
 
   private_constant :FormTagBuilder
 
-  class FormBuilder
+  class FormBuilderInterface
     def initialize(entity)
       @entity = entity
       @temp_tags_result = ''
     end
 
-    def input(name, **options)
+    def input(name, **options) # rubocop:disable Metrics/AbcSize
       params = form_tag_builder_iput_params(name, **options)
 
       case params[:as].to_sym
@@ -42,7 +42,7 @@ module HexletCode
 
     def submit(text = 'Save', **options)
       add_tag do
-        Tag.build 'input', { type: 'submit', **options, value: text, name: 'commit' }
+        FormTagBuilder::Submit.new.build text, **options
       end
     end
 
