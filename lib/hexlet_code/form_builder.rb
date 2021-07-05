@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'byebug'
-
 require_relative './form_tag_builder'
 
 module HexletCode
