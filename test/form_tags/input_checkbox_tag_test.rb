@@ -4,7 +4,7 @@ require_relative '../test_helper'
 
 class InputCheckboxTagTest < Minitest::Test
   extend MiniTest::Spec::DSL
-  
+
   it 'should render checked checkbox with label' do
     user_struct = Struct.new(:like_fish, keyword_init: true)
     user = user_struct.new like_fish: true

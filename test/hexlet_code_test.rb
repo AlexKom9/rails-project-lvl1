@@ -46,7 +46,7 @@ class HexletCodeTest < Minitest::Test # rubocop:disable Metrics/ClassLength
     end
 
     assert_have_tag form, "input.submit-btn[type='submit'][value='Save changes'][name='commit']"
-   end
+  end
 
   it 'should render form input without value and with label' do
     user_struct = Struct.new(:name, :job, keyword_init: true)

@@ -22,5 +22,5 @@ class SubmitInputTagTest < Minitest::Test
     end
 
     assert_have_tag form, "input.submit-btn[type='submit'][value='Save changes'][name='commit']"
-   end
+  end
 end
