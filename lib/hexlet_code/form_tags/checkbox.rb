@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module HexletCode
-  module FormTagBuilder
+  module FormTags
     class Checkbox < Base
       def build(name:, value:, id:, **options)
         add_tag do

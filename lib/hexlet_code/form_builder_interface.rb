@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module HexletCode
-  autoload :FormTagBuilder, 'hexlet_code/form_tag_builder'
+  autoload :FormTags, 'hexlet_code/form_tags'
 
   private_constant :FormBuilderInterface
 
@@ -14,28 +14,28 @@ module HexletCode
     end
 
     def input(name, **options) # rubocop:disable Metrics/AbcSize
-      params = form_tag_builder_iput_params(name, **options)
+      params = form_tags_input_params(name, **options)
 
       case params[:as].to_sym
       when :input
         add_tag do
-          FormTagBuilder::Input.new.build name: name, value: params[:value], id: params[:id],
-                                          **params[:prepared_options]
+          FormTags::Input.new.build name: name, value: params[:value], id: params[:id],
+                                    **params[:prepared_options]
         end
       when :text
         add_tag do
-          FormTagBuilder::Textarea.new.build name: name, value: params[:value], id: params[:id],
-                                             **params[:prepared_options]
+          FormTags::Textarea.new.build name: name, value: params[:value], id: params[:id],
+                                       **params[:prepared_options]
         end
       when :checkbox
         add_tag do
-          FormTagBuilder::Checkbox.new.build name: name, value: params[:value], id: params[:id],
-                                             **params[:prepared_options]
+          FormTags::Checkbox.new.build name: name, value: params[:value], id: params[:id],
+                                       **params[:prepared_options]
         end
       when :select
         add_tag do
-          FormTagBuilder::Select.new.build name: name, value: params[:value], id: params[:id],
-                                           **params[:prepared_options]
+          FormTags::Select.new.build name: name, value: params[:value], id: params[:id],
+                                     **params[:prepared_options]
         end
       else
         raise WrongArgumentError,
@@ -43,15 +43,15 @@ module HexletCode
       end
     end
 
-    def submit(text = 'Save', **options)
+    def submit(text = "Save", **options)
       add_tag do
-        FormTagBuilder::Submit.new.build text, **options
+        FormTags::Submit.new.build text, **options
       end
     end
 
     private
 
-    def form_tag_builder_iput_params(name, **options)
+    def form_tags_input_params(name, **options)
       id = options.fetch(:id, name)
       as = options.fetch(:as, :input)
 

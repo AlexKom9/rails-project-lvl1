@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module HexletCode
-  module FormTagBuilder
+  module FormTags
     class Base
       def initialize
         @temp_tags_result = ''
