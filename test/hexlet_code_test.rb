@@ -25,8 +25,7 @@ class HexletCodeTest < Minitest::Test # rubocop:disable Metrics/ClassLength
 
     form = HexletCode.form_for user, '/test', 'PATCH', &:submit
 
-    assert_includes form, "<form action='/test' method='PATCH'>"
-    assert_includes form, '</form>'
+    assert_have_tag form, "form[action='/test'][method='PATCH']"
   end
 
   it 'should render submit button' do
@@ -35,7 +34,7 @@ class HexletCodeTest < Minitest::Test # rubocop:disable Metrics/ClassLength
 
     form = HexletCode.form_for user, &:submit
 
-    assert_includes form, "<input type='submit' value='Save' name='commit'/>"
+    assert_have_tag form, "input[type='submit'][value='Save'][name='commit']"
   end
 
   it 'should render submit button with text and className' do
@@ -46,8 +45,8 @@ class HexletCodeTest < Minitest::Test # rubocop:disable Metrics/ClassLength
       f.submit 'Save changes', class: 'submit-btn'
     end
 
-    assert_includes form, "<input type='submit' class='submit-btn' value='Save changes' name='commit'/>"
-  end
+    assert_have_tag form, "input.submit-btn[type='submit'][value='Save changes'][name='commit']"
+   end
 
   it 'should render form input without value and with label' do
     user_struct = Struct.new(:name, :job, keyword_init: true)
@@ -57,8 +56,8 @@ class HexletCodeTest < Minitest::Test # rubocop:disable Metrics/ClassLength
       f.input :name
     end
 
-    assert_includes form, "<label for='name'>name</label>"
-    assert_includes form, "<input name='name' value='' id='name' type='text'/>"
+    assert_have_tag form, "label[for='name']", 'name'
+    assert_have_tag form, "input[type='text'][value=''][id='name']"
   end
 
   it 'should render form input with value and label' do
@@ -70,8 +69,8 @@ class HexletCodeTest < Minitest::Test # rubocop:disable Metrics/ClassLength
       f.submit
     end
 
-    assert_includes form, "<label for='name'>name</label>"
-    assert_includes form, "<input name='name' value='john doe' id='name' type='text'/>"
+    assert_have_tag form, "label[for='name']", 'name'
+    assert_have_tag form, "input[name='name'][value='john doe'][id='name'][type='text']"
   end
 
   it 'should render crrect name for input' do
@@ -82,7 +81,7 @@ class HexletCodeTest < Minitest::Test # rubocop:disable Metrics/ClassLength
       f.input :test
     end
 
-    assert_includes form, "<input name='test' value='john doe' id='test' type='text'/>"
+    assert_have_tag form, "input[name='test'][id='test']"
   end
 
   it 'should render custom id for input and label' do
@@ -93,8 +92,8 @@ class HexletCodeTest < Minitest::Test # rubocop:disable Metrics/ClassLength
       f.input :test, id: :test_name_id
     end
 
-    assert_includes form, "<label for='test_name_id'>test</label>"
-    assert_includes form, "<input name='test' value='john doe' id='test_name_id' type='text'/>"
+    assert_have_tag form, "label[for='test_name_id']", 'test'
+    assert_have_tag form, "input[name='test'][id='test_name_id']"
   end
 
   it 'should render form input textarea with value and label' do
@@ -105,8 +104,8 @@ class HexletCodeTest < Minitest::Test # rubocop:disable Metrics/ClassLength
       f.input :job, as: :text
     end
 
-    assert_includes form, "<label for='job'>job</label>"
-    assert_includes form, "<textarea name='job' id='job'>hexlet</textarea>"
+    assert_have_tag form, "label[for='job']", 'job'
+    assert_have_tag form, "textarea[name='job'][id='job']", 'hexlet'
   end
 
   it 'should render form input textarea without value and label' do
@@ -117,8 +116,8 @@ class HexletCodeTest < Minitest::Test # rubocop:disable Metrics/ClassLength
       f.input :job, as: :text
     end
 
-    assert_includes form, "<label for='job'>job</label>"
-    assert_includes form, "<textarea name='job' id='job'></textarea>"
+    assert_have_tag form, "label[for='job']", 'job'
+    assert_have_tag form, "textarea[name='job'][id='job']"
   end
 
   it 'should render form input with class name' do
@@ -129,7 +128,7 @@ class HexletCodeTest < Minitest::Test # rubocop:disable Metrics/ClassLength
       f.input :name, class: 'user-input'
     end
 
-    assert_includes form, "<input name='name' value='john doe' id='name' type='text' class='user-input'/>"
+    assert_have_tag form, "input.user-input[name='name'][value='john doe'][id='name'][type='text']"
   end
 
   it 'should render form select with options' do
@@ -140,11 +139,10 @@ class HexletCodeTest < Minitest::Test # rubocop:disable Metrics/ClassLength
       f.input :gender, as: 'select', options: %w[f m]
     end
 
-    assert_includes form, "<label for='gender'>gender</label>"
-    assert_includes form, "<select name='gender' value='f' id='gender'>"
-    assert_includes form, "<option value='f'>f</option>"
-    assert_includes form, "<option value='m'>m</option>"
-    assert_includes form, '</select>'
+    assert_have_tag form, "label[for='gender']", 'gender'
+    assert_have_tag form, "select[name='gender'][value='f'][id='gender']"
+    assert_have_tag form, "option[value='f']", 'f'
+    assert_have_tag form, "option[value='m']", 'm'
   end
 
   it 'should render checked checkbox with label' do
@@ -155,8 +153,8 @@ class HexletCodeTest < Minitest::Test # rubocop:disable Metrics/ClassLength
       f.input :like_fish, as: 'checkbox'
     end
 
-    assert_includes form, "<label for='like_fish'>like_fish</label>"
-    assert_includes form, "<input name='like_fish' checked='true' value='like_fish' id='like_fish' type='checkbox'/>"
+    assert_have_tag form, "label[for='like_fish']", 'like_fish'
+    assert_have_tag form, "input[name='like_fish'][checked='true'][value='like_fish'][id='like_fish'][type='checkbox']"
   end
 
   it 'should render unchecked checkbox with label' do
@@ -167,7 +165,7 @@ class HexletCodeTest < Minitest::Test # rubocop:disable Metrics/ClassLength
       f.input :like_fish, as: 'checkbox'
     end
 
-    assert_includes form, "<label for='like_fish'>like_fish</label>"
-    assert_includes form, "<input name='like_fish' checked='false' value='like_fish' id='like_fish' type='checkbox'/>"
+    assert_have_tag form, "label[for='like_fish']", 'like_fish'
+    assert_have_tag form, "input[name='like_fish'][checked='false'][value='like_fish'][id='like_fish'][type='checkbox']"
   end
 end

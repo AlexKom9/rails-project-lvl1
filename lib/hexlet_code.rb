@@ -17,15 +17,3 @@ module HexletCode
     end
   end
 end
-
-user_struct = Struct.new(:name, :job, :gender, keyword_init: true)
-user = user_struct.new name: 'john doe', gender: 'f'
-
-form = HexletCode.form_for user do |f|
-  f.input :name
-  f.input :gender, as: 'select', options: %w[f m]
-end
-
-# form = HexletCode.form_for user
-
-pp form
