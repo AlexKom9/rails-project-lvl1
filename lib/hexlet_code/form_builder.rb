@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative './form_tag_builder'
-
 module HexletCode
+  autoload :FormTagBuilder, 'hexlet_code/form_tag_builder'
+
   private_constant :FormTagBuilder
 
   class FormBuilder

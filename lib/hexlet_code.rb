@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 require_relative 'hexlet_code/version'
-# TODO: replace with autoload
-require_relative 'hexlet_code/tag'
-require_relative 'hexlet_code/form_builder'
-
 module HexletCode
+  autoload :Tag, 'hexlet_code/tag'
+  autoload :FormBuilder, 'hexlet_code/form_builder'
+
   private_constant :Tag
   private_constant :FormBuilder
 

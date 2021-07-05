@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
-require_relative './form_tag_builder/base'
-require_relative './form_tag_builder/select'
-require_relative './form_tag_builder/input'
-require_relative './form_tag_builder/textarea'
-require_relative './form_tag_builder/checkbox'
-
 module HexletCode
   module FormTagBuilder
-    private_constant :Base
+    autoload :Base, 'hexlet_code/form_tag_builder/base'
+    autoload :Input, 'hexlet_code/form_tag_builder/input'
+    autoload :Select, 'hexlet_code/form_tag_builder/select'
+    autoload :Textarea, 'hexlet_code/form_tag_builder/textarea'
+    autoload :Checkbox, 'hexlet_code/form_tag_builder/checkbox'
   end
 end
