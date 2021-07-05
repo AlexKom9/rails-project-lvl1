@@ -8,7 +8,7 @@ module HexletCode
         add_tag do
           Tag.build('input', { name: name, checked: value, value: name, id: id, **options, type: :checkbox })
         end
-        
+
         add_tag do
           Tag.build('label', { for: id }) { name }
         end

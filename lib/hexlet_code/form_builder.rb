@@ -14,29 +14,28 @@ module HexletCode
     end
 
     def input(name, **options)
-      id = options.fetch(:id, name)
-      as = options.fetch(:as, :input)
+      params = form_tag_builder_iput_params(name, **options)
 
-      prepared_options = options.clone
-      prepared_options.delete(:id)
-      prepared_options.delete(:as)
-
-      case as.to_sym
+      case params[:as].to_sym
       when :input
         add_tag do
-          FormTagBuilder::Input.new.build name: name, value: @entity[name], id: id, **prepared_options
+          FormTagBuilder::Input.new.build name: name, value: params[:value], id: params[:id],
+                                          **params[:prepared_options]
         end
       when :text
         add_tag do
-          FormTagBuilder::Textarea.new.build name: name, value: @entity[name], id: id, **prepared_options
+          FormTagBuilder::Textarea.new.build name: name, value: params[:value], id: params[:id],
+                                             **params[:prepared_options]
         end
       when :checkbox
         add_tag do
-          FormTagBuilder::Checkbox.new.build name: name, value: @entity[name], id: id, **prepared_options
+          FormTagBuilder::Checkbox.new.build name: name, value: params[:value], id: params[:id],
+                                             **params[:prepared_options]
         end
       when :select
         add_tag do
-          FormTagBuilder::Select.new.build name: name, value: @entity[name], id: id, **prepared_options
+          FormTagBuilder::Select.new.build name: name, value: params[:value], id: params[:id],
+                                           **params[:prepared_options]
         end
       else
         raise 'Invalid options.as'
@@ -50,6 +49,17 @@ module HexletCode
     end
 
     private
+
+    def form_tag_builder_iput_params(name, **options)
+      id = options.fetch(:id, name)
+      as = options.fetch(:as, :input)
+
+      prepared_options = options.clone
+      prepared_options.delete(:id)
+      prepared_options.delete(:as)
+
+      { as: as, value: @entity[name], id: id, prepared_options: prepared_options }
+    end
 
     def add_new_line
       @temp_tags_result += "\n"
