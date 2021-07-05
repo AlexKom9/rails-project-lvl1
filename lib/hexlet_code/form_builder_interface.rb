@@ -4,6 +4,9 @@ module HexletCode
   autoload :FormTagBuilder, 'hexlet_code/form_tag_builder'
 
   private_constant :FormBuilderInterface
+
+  class WrongArgumentError < ::StandardError; end
+
   class FormBuilderInterface
     def initialize(entity)
       @entity = entity
@@ -35,7 +38,8 @@ module HexletCode
                                            **params[:prepared_options]
         end
       else
-        raise 'Invalid options.as'
+        raise WrongArgumentError,
+              "Invalid 'as' option. Option 'as' suports only :input, :text, :checkbox and :select values"
       end
     end
 
